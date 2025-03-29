@@ -36,7 +36,7 @@ function NavBar() {
     const navItems = [
         { text: 'Inicio', path: '/', icon: <HomeIcon /> },
         { text: 'Acerca de', path: '/about', icon: <InfoIcon /> },
-        // Agrega más elementos de menú aquí
+        { text: 'Órdenes', path: '/orders', icon: <ShoppingCartIcon /> },
     ];
 
     const drawer = (

@@ -2,6 +2,7 @@ import { createBrowserRouter } from 'react-router-dom';
 import ErrorPage from './ErrorPage';
 import HomePage from './routes/HomePage';
 import AboutPage from './routes/AboutPage';
+import OrdersPage from './routes/OrdersPage';
 import Layout from './components/Layout';
 
 export const router = createBrowserRouter([
@@ -18,7 +19,10 @@ export const router = createBrowserRouter([
                 path: 'about',
                 element: <AboutPage />,
             },
-            // Agrega más rutas hijas aquí
+            {
+                path: 'orders',
+                element: <OrdersPage />,
+            }
         ],
     },
 ]);
