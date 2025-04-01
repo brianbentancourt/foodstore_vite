@@ -34,6 +34,7 @@ const getStatusColor = (status) => {
         case stateLabels.firstClientState: return '#FFA000'; // Amber
         case stateLabels.lastState: return '#4CAF50'; // Green
         case stateLabels.canceledState: return '#F44336'; // Red
+        case stateLabels.delayState: return '#FF9800'; // Orange
         default: return '#757575'; // Grey
     }
 };
@@ -95,7 +96,7 @@ const CompactOrderCard = React.memo(({ order, onEditOrder, onPrintOrder, onViewH
                     {Object.entries(stateLabels)
                         .filter(([key]) => key !== 'all')
                         .map(([value, label]) => (
-                            <MenuItem key={value} value={value}>
+                            <MenuItem key={value} value={label}>
                                 {label}
                             </MenuItem>
                         ))
