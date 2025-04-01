@@ -1,7 +1,7 @@
 // src/firebase/firebaseConfig.js
 import { initializeApp } from 'firebase/app';
 // Importa los servicios de Firebase que vayas a usar
-// import { getAuth } from 'firebase/auth';
+import { getAuth, GoogleAuthProvider } from "firebase/auth";
 // import { getFirestore } from 'firebase/firestore';
 // import { getDatabase } from 'firebase/database';
 // import { getStorage } from 'firebase/storage';
@@ -20,8 +20,11 @@ const app = initializeApp(firebaseConfig);
 
 // Exporta la instancia de la aplicación y los servicios que necesites
 export default app;
-// export const auth = getAuth(app);
+const auth = getAuth(app);
+const googleProvider = new GoogleAuthProvider();
 // export const db = getFirestore(app);
 // export const database = getDatabase(app);
 // export const storage = getStorage(app);
 // export const messaging = getMessaging(app);
+
+export { auth, googleProvider };

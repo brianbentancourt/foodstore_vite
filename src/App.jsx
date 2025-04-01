@@ -3,12 +3,15 @@ import React from 'react';
 import { RouterProvider } from 'react-router-dom';
 import { router } from './router';
 import { OrdersProvider } from './context/OrdersContext';
+import { AuthProvider } from './context/AuthContext';
 
 function App() {
   return (
-    <OrdersProvider>
-      <RouterProvider router={router} />
-    </OrdersProvider>
+    <AuthProvider>
+      <OrdersProvider>
+        <RouterProvider router={router} />
+      </OrdersProvider>
+    </AuthProvider>
   );
 }
 

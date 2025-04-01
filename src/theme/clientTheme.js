@@ -94,10 +94,47 @@ export const theme = createTheme({
         MuiButton: {
             styleOverrides: {
                 root: {
-                    textTransform: 'none',
+                    textTransform: 'none', // Evita que el texto esté en mayúsculas
+                    '&:focus': {
+                        outline: 'none', // Quita el borde negro al hacer clic
+                    },
+                },
+                contained: {
+                    '&:hover': {
+                        backgroundColor: clientTheme.primary.dark, // Mantiene el color oscuro al hacer hover
+                        color: clientTheme.primary.contrastText, // Mantiene el color del texto
+                    },
+                },
+                outlined: {
+                    '&:hover': {
+                        borderColor: clientTheme.primary.dark, // Mantiene el borde en hover
+                        color: clientTheme.primary.main, // Mantiene el color del texto
+                    },
+                },
+                text: {
+                    '&:hover': {
+                        backgroundColor: 'transparent', // Evita que se sombreé el fondo
+                        color: clientTheme.primary.main, // Mantiene el color del texto
+                    },
                 },
             },
         },
+        MuiIconButton: {
+            styleOverrides: {
+                root: {
+                    '&:focus': {
+                        outline: 'none', // Quita el borde negro al hacer clic
+                    },
+                    '&:hover': {
+                        backgroundColor: `rgba(${parseInt(clientTheme.primary.main.slice(1, 3), 16)}, 
+                                        ${parseInt(clientTheme.primary.main.slice(3, 5), 16)}, 
+                                        ${parseInt(clientTheme.primary.main.slice(5, 7), 16)}, 0.2)`,
+                        color: 'inherit', // Mantiene el color original del icono
+                    },
+                },
+            },
+        },
+
     },
 });
 

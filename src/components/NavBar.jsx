@@ -13,37 +13,73 @@ import {
     ListItemText,
     Drawer,
     Button,
-    Divider
+    Divider,
+    Avatar,
+    Menu,
+    MenuItem
 } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
-import CloseIcon from '@mui/icons-material/Close'; // Importa el icono de cerrar
+import CloseIcon from '@mui/icons-material/Close';
 import HomeIcon from '@mui/icons-material/Home';
 import InfoIcon from '@mui/icons-material/Info';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
+import ReceiptIcon from '@mui/icons-material/Receipt';
+import LoginIcon from '@mui/icons-material/Login';
+import LogoutIcon from '@mui/icons-material/Logout';
 import { Link } from 'react-router-dom';
 import SearchBar from './SearchBar';
+import LoginModal from './LoginModal';
+import { useAuth } from '../context/AuthContext';
 import { clientAppName } from '../theme/clientTheme';
 
 function NavBar() {
     const [drawerOpen, setDrawerOpen] = useState(false);
+    const [loginModalOpen, setLoginModalOpen] = useState(false);
+    const [userMenuAnchor, setUserMenuAnchor] = useState(null);
+    const { currentUser, userPoints, logout } = useAuth();
 
     const handleDrawerToggle = () => {
         setDrawerOpen(!drawerOpen);
+    };
+
+    const handleLoginClick = () => {
+        setLoginModalOpen(true);
+    };
+
+    const handleCloseLoginModal = () => {
+        setLoginModalOpen(false);
+    };
+
+    const handleUserMenuOpen = (event) => {
+        setUserMenuAnchor(event.currentTarget);
+    };
+
+    const handleUserMenuClose = () => {
+        setUserMenuAnchor(null);
+    };
+
+    const handleLogout = async () => {
+        try {
+            await logout();
+            handleUserMenuClose();
+        } catch (error) {
+            console.error("Error al cerrar sesión:", error);
+        }
     };
 
     const drawerWidth = 240;
 
     const navItems = [
         { text: 'Inicio', path: '/', icon: <HomeIcon /> },
+        { text: 'Pedidos', path: '/orders', icon: <ReceiptIcon /> },
         { text: 'Acerca de', path: '/about', icon: <InfoIcon /> },
-        { text: 'Órdenes', path: '/orders', icon: <ShoppingCartIcon /> },
     ];
 
     const drawer = (
         <Box sx={{ width: drawerWidth }} role="presentation" onClick={handleDrawerToggle} onKeyDown={handleDrawerToggle}>
             <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-end', p: 1 }}>
                 <IconButton onClick={handleDrawerToggle}>
-                    <CloseIcon /> {/* Icono de cerrar en la parte superior */}
+                    <CloseIcon />
                 </IconButton>
             </Box>
             <List>
@@ -56,9 +92,19 @@ function NavBar() {
                     </ListItem>
                 ))}
             </List>
+            {currentUser && (
+                <>
+                    <Divider />
+                    <ListItem disablePadding>
+                        <ListItemButton onClick={handleLogout}>
+                            <ListItemIcon><LogoutIcon /></ListItemIcon>
+                            <ListItemText primary="Cerrar sesión" />
+                        </ListItemButton>
+                    </ListItem>
+                </>
+            )}
         </Box>
     );
-
 
     return (
         <Box>
@@ -95,25 +141,65 @@ function NavBar() {
                         </Box>
                     </Box>
 
-                    {/* Sección derecha: Carrito y puntos */}
+                    {/* Sección derecha: Login/Usuario, Carrito y puntos */}
                     <Box sx={{ marginLeft: 'auto', display: 'flex', alignItems: 'center', minWidth: '200px', justifyContent: 'flex-end' }}>
                         <IconButton color="inherit" component={Link} to="/cart">
                             <Badge badgeContent={1} color="secondary">
                                 <ShoppingCartIcon />
                             </Badge>
                         </IconButton>
-                        <Typography variant="body1" color="inherit" sx={{ ml: 2 }}>
-                            Puntos: {5555}
-                        </Typography>
+
+                        {currentUser ? (
+                            <>
+                                <Typography variant="body1" color="inherit" sx={{ ml: 2 }}>
+                                    Puntos: {userPoints}
+                                </Typography>
+                                <IconButton
+                                    onClick={handleUserMenuOpen}
+                                    sx={{ ml: 1 }}
+                                >
+                                    <Avatar
+                                        src={currentUser.photoURL}
+                                        alt={currentUser.displayName}
+                                        sx={{ width: 32, height: 32 }}
+                                    />
+                                </IconButton>
+                                <Menu
+                                    anchorEl={userMenuAnchor}
+                                    open={Boolean(userMenuAnchor)}
+                                    onClose={handleUserMenuClose}
+                                >
+                                    <MenuItem component={Link} to="/profile" onClick={handleUserMenuClose}>
+                                        Perfil
+                                    </MenuItem>
+                                    <MenuItem onClick={handleLogout}>
+                                        Cerrar sesión
+                                    </MenuItem>
+                                </Menu>
+                            </>
+                        ) : (
+                            <Button
+                                color="inherit"
+                                startIcon={<LoginIcon />}
+                                onClick={handleLoginClick}
+                                sx={{ ml: 2 }}
+                            >
+                                Iniciar sesión
+                            </Button>
+                        )}
                     </Box>
                 </Toolbar>
             </AppBar>
+
+            {/* Modal de login */}
+            <LoginModal open={loginModalOpen} onClose={handleCloseLoginModal} />
+
             <Box component="nav">
                 <Drawer
                     open={drawerOpen}
                     onClose={handleDrawerToggle}
                     ModalProps={{
-                        keepMounted: true, // Better open performance on mobile.
+                        keepMounted: true,
                     }}
                     sx={{
                         '& .MuiDrawer-paper': { boxSizing: 'border-box', width: drawerWidth },

@@ -16,6 +16,8 @@
     "@fontsource/roboto": "^5.2.5",
     "@mui/icons-material": "^7.0.1",
     "@mui/material": "^7.0.1",
+    "@tanstack/react-virtual": "^3.13.6",
+    "dayjs": "^1.11.13",
     "firebase": "^11.5.0",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
