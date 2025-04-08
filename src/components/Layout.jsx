@@ -11,7 +11,7 @@ function Layout() {
 
 
     return (
-        <Box sx={{ display: 'flex' }}>
+        <Box sx={{ display: 'flex', backgroundColor: 'yellow', width: '100%' }}>
             <NavBar /> {/* Componente NavBar que contiene el AppBar y el Drawer */}
 
             <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
