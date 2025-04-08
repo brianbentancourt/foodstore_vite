@@ -4,6 +4,7 @@ import RestaurantIcon from '@mui/icons-material/Restaurant';
 import LocalOfferIcon from '@mui/icons-material/LocalOffer';
 import DeliveryDiningIcon from '@mui/icons-material/DeliveryDining';
 import { clientAppName } from '../theme/clientTheme';
+import ProductListContainer from './product/ProductListContainer';
 
 function MainContent() {
     // Acceder al tema actual para usar sus colores
@@ -153,83 +154,7 @@ function MainContent() {
 
                 {/* Productos destacados */}
                 <Grid container spacing={3} sx={{ mb: 5 }}>
-                    {featuredItems.map((item) => (
-                        <Grid item xs={12} sm={6} md={3} key={item.id}>
-                            <Card
-                                sx={{
-                                    height: '100%',
-                                    display: 'flex',
-                                    flexDirection: 'column',
-                                    borderRadius: 2,
-                                    position: 'relative',
-                                    transition: 'all 0.3s ease',
-                                    '&:hover': {
-                                        transform: 'translateY(-5px)',
-                                        boxShadow: 4
-                                    }
-                                }}
-                            >
-                                {item.popular && (
-                                    <Box
-                                        sx={{
-                                            position: 'absolute',
-                                            top: 12,
-                                            right: 12,
-                                            backgroundColor: theme.palette.secondary.main,
-                                            color: theme.palette.secondary.contrastText,
-                                            px: 1,
-                                            py: 0.5,
-                                            borderRadius: 1,
-                                            fontSize: '0.75rem',
-                                            fontWeight: 'bold'
-                                        }}
-                                    >
-                                        Popular
-                                    </Box>
-                                )}
-                                {/* Área de color que simula una imagen */}
-                                <Box
-                                    sx={{
-                                        height: 120,
-                                        backgroundColor: theme.palette.primary.light,
-                                        opacity: 0.7,
-                                        display: 'flex',
-                                        alignItems: 'center',
-                                        justifyContent: 'center'
-                                    }}
-                                >
-                                    <RestaurantIcon sx={{ fontSize: 40, color: 'white' }} />
-                                </Box>
-                                <CardContent sx={{ flexGrow: 1, pt: 2 }}>
-                                    <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 1 }}>
-                                        <Typography variant="h6" component="h3" fontSize="1rem">
-                                            {item.name}
-                                        </Typography>
-                                        <Typography
-                                            variant="subtitle1"
-                                            fontWeight="bold"
-                                            sx={{
-                                                color: theme.palette.primary.main
-                                            }}
-                                        >
-                                            {item.price}
-                                        </Typography>
-                                    </Box>
-                                    <Typography variant="body2" color="text.secondary" mb={2}>
-                                        {item.description}
-                                    </Typography>
-                                    <Button
-                                        fullWidth
-                                        variant="outlined"
-                                        color="primary"
-                                        size="small"
-                                    >
-                                        Añadir al Carrito
-                                    </Button>
-                                </CardContent>
-                            </Card>
-                        </Grid>
-                    ))}
+                    <ProductListContainer />
                 </Grid>
 
                 {/* Sección de promociones */}
