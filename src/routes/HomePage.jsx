@@ -11,14 +11,14 @@ export default function HomePage() {
     };
 
     return (
-        <Container maxWidth="sm" sx={{ mt: 4, textAlign: 'center' }}>
+        <Container maxWidth="100%" sx={{ mt: 4, textAlign: 'center' }}>
             <Typography variant="h2" component="h1" gutterBottom>
                 Página de Inicio
             </Typography>
             <Typography variant="body1" paragraph>
                 Bienvenido a la página de inicio de tu aplicación con MUI v7 y Vite.
             </Typography>
-            <Box mt={2}>
+            <Box mt={2} mb={2}>
                 <Button variant="contained" color="secondary" onClick={handleAboutClick}>
                     Ir a la página "Acerca de"
                 </Button>

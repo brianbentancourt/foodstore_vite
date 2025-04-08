@@ -10,38 +10,6 @@ function MainContent() {
     // Acceder al tema actual para usar sus colores
     const theme = useTheme();
 
-    // En una aplicación real, estos datos vendrían de una API
-    const featuredItems = [
-        {
-            id: 1,
-            name: 'Plato Especial',
-            description: 'Nuestra especialidad de la casa, preparada con ingredientes frescos.',
-            price: '$12.99',
-            popular: true
-        },
-        {
-            id: 2,
-            name: 'Combo Familiar',
-            description: 'Perfecto para compartir, incluye 4 platos principales y 2 acompañamientos.',
-            price: '$29.99',
-            popular: false
-        },
-        {
-            id: 3,
-            name: 'Postre del Día',
-            description: 'Delicioso postre artesanal, pregunta por la disponibilidad del día.',
-            price: '$6.99',
-            popular: true
-        },
-        {
-            id: 4,
-            name: 'Bebida Especial',
-            description: 'Refrescante bebida preparada con ingredientes naturales.',
-            price: '$4.99',
-            popular: false
-        }
-    ];
-
     return (
         <Box
             sx={{
@@ -50,9 +18,9 @@ function MainContent() {
                 backgroundColor: theme.palette.background.default
             }}
         >
-            <Container maxWidth="lg">
+            <Container maxWidth="100%" >
                 {/* Banner principal con los colores del tema */}
-                <Paper
+                {/* <Paper
                     elevation={3}
                     sx={{
                         p: 4,
@@ -105,7 +73,6 @@ function MainContent() {
                     </Box>
                 </Paper>
 
-                {/* Características del restaurante */}
                 <Grid container spacing={3} sx={{ mb: 4 }}>
                     {[
                         { icon: <RestaurantIcon fontSize="large" />, title: 'Comida de Calidad', text: 'Ingredientes frescos y seleccionados' },
@@ -142,7 +109,7 @@ function MainContent() {
                             </Paper>
                         </Grid>
                     ))}
-                </Grid>
+                     </Grid> */}
 
                 {/* Título de sección con subrayado del color secundario */}
                 <Box sx={{ mb: 3, display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
@@ -153,12 +120,10 @@ function MainContent() {
                 </Box>
 
                 {/* Productos destacados */}
-                <Grid container spacing={3} sx={{ mb: 5 }}>
-                    <ProductListContainer />
-                </Grid>
+                <ProductListContainer />
 
                 {/* Sección de promociones */}
-                <Paper
+                {/* <Paper
                     sx={{
                         p: 3,
                         borderRadius: 2,
@@ -190,7 +155,7 @@ function MainContent() {
                     >
                         Aplicar Código
                     </Button>
-                </Paper>
+                </Paper> */}
             </Container>
         </Box>
     );

@@ -135,12 +135,14 @@ const ProductListContainer = () => {
         error,
         selectedCategory,
         setSelectedCategory,
-        searchProducts
+        // searchProducts,
+        // searchTerm,
+        // setSearchTerm
     } = useProducts();
 
     const { addOrder } = useOrders();
 
-    const [searchTerm, setSearchTerm] = useState('');
+
     const [cart, setCart] = useState({ productsList: [] });
     const [cartOpen, setCartOpen] = useState(false);
     const [notification, setNotification] = useState({ open: false, message: '', type: 'info' });
@@ -156,11 +158,11 @@ const ProductListContainer = () => {
     }, [cart.productsList]);
 
     // Manejar búsqueda
-    const handleSearch = useCallback((e) => {
-        const value = e.target.value;
-        setSearchTerm(value);
-        searchProducts(value);
-    }, [searchProducts]);
+    // const handleSearch = useCallback((e) => {
+    //     const value = e.target.value;
+    //     updateSearchText(value);
+    //     searchProducts(value);
+    // }, [searchProducts, searchText]);
 
     // Manejar cambio de categoría
     const handleCategoryChange = useCallback((e) => {
@@ -274,17 +276,17 @@ const ProductListContainer = () => {
     }, []);
 
     return (
-        <Container maxWidth="xl">
+        <Box sx={{ width: '100%', maxWidth: '100%', }}>
             {/* Header y Filtros */}
-            <Box sx={{ mb: 4, mt: 2 }}>
-                <Grid container spacing={2} alignItems="center">
-                    <Grid item xs={12} md={4}>
+            <Box sx={{ mb: 4, mt: 2, width: '100%' }}>
+                <Grid container spacing={2} alignItems="center" justifyContent="center">
+                    <Grid item xs={12} >
                         <Typography variant="h4" component="h1" gutterBottom>
                             Nuestros Productos
                         </Typography>
                     </Grid>
 
-                    <Grid item xs={12} md={4}>
+                    {/* <Grid item xs={12} md={4}>
                         <TextField
                             fullWidth
                             variant="outlined"
@@ -299,7 +301,7 @@ const ProductListContainer = () => {
                                 ),
                             }}
                         />
-                    </Grid>
+                    </Grid> */}
 
                     <Grid item xs={12} md={4}>
                         <FormControl fullWidth variant="outlined">
@@ -385,11 +387,12 @@ const ProductListContainer = () => {
                     {notification.message}
                 </Alert>
             </Snackbar>
-        </Container>
+        </Box>
     );
 };
 
 // Imports faltantes
 import { Badge, Button } from '@mui/material';
+import { useSearch } from '../../context/SearchContext';
 
 export default ProductListContainer;

@@ -4,7 +4,7 @@ import InputBase from '@mui/material/InputBase';
 import SearchIcon from '@mui/icons-material/Search';
 import ClearIcon from '@mui/icons-material/Clear';
 import IconButton from '@mui/material/IconButton';
-import { SearchContext } from '../context/SearchContext';
+import { useProducts } from '../context/ProductsContext';
 
 // Componente contenedor de búsqueda
 const Search = styled('div')(({ theme, expanded }) => ({
@@ -60,7 +60,7 @@ function SearchBar() {
     const [isExpanded, setIsExpanded] = useState(false);
     const inputRef = useRef(null);
     const searchContainerRef = useRef(null);
-    const { searchText, updateSearchText, clearSearchText } = useContext(SearchContext);
+    const { searchTerm, setSearchTerm } = useProducts();
 
     const handleExpand = () => {
         setIsExpanded(true);
@@ -73,12 +73,12 @@ function SearchBar() {
     };
 
     const handleInputChange = (event) => {
-        updateSearchText(event.target.value);
+        setSearchTerm(event.target.value);
     };
 
     const handleClear = (e) => {
         e.stopPropagation(); // Evita que el clic propague al contenedor
-        clearSearchText();
+        setSearchTerm('');
         if (inputRef.current) {
             inputRef.current.focus();
         }
@@ -88,7 +88,7 @@ function SearchBar() {
     React.useEffect(() => {
         const handleClickOutside = (event) => {
             if (searchContainerRef.current && !searchContainerRef.current.contains(event.target)) {
-                if (!searchText) {
+                if (!searchTerm) {
                     setIsExpanded(false);
                 }
             }
@@ -98,7 +98,7 @@ function SearchBar() {
         return () => {
             document.removeEventListener('mousedown', handleClickOutside);
         };
-    }, [searchText]);
+    }, [searchTerm]);
 
     return (
         <Search
@@ -113,11 +113,11 @@ function SearchBar() {
                 placeholder="Buscar…"
                 inputProps={{ 'aria-label': 'search' }}
                 inputRef={inputRef}
-                value={searchText}
+                value={searchTerm}
                 onChange={handleInputChange}
                 expanded={isExpanded}
             />
-            {searchText && isExpanded && (
+            {searchTerm && isExpanded && (
                 <IconButton
                     aria-label="clear"
                     onClick={handleClear}

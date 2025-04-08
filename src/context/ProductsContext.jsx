@@ -1,4 +1,4 @@
-// src/products/ProductsContext.jsx
+// src/context/ProductsContext.jsx
 import React, { createContext, useState, useEffect, useContext, useMemo, useCallback } from 'react';
 import firebaseApp from '../firebase/firebaseConfig';
 import {
@@ -25,7 +25,13 @@ const productsCollectionRef = collection(db, 'products');
 const ProductsContext = createContext();
 
 // Hook personalizado para usar el contexto
-export const useProducts = () => useContext(ProductsContext);
+export const useProducts = () => {
+    const context = useContext(ProductsContext);
+    if (!context) {
+        throw new Error('useProducts must be used within a ProductsProvider');
+    }
+    return context;
+};
 
 // Provider del Context
 export const ProductsProvider = ({ children }) => {
@@ -36,6 +42,7 @@ export const ProductsProvider = ({ children }) => {
     const [lastFetched, setLastFetched] = useState(null);
     const [filteredProducts, setFilteredProducts] = useState([]);
     const [selectedCategory, setSelectedCategory] = useState('all');
+    const [searchTerm, setSearchTerm] = useState('');
 
     // Obtener productos y almacenarlos en caché
     useEffect(() => {
@@ -288,6 +295,15 @@ export const ProductsProvider = ({ children }) => {
         setFilteredProducts(results);
     }, [products, selectedCategory]);
 
+    useEffect(() => {
+        const delayDebounce = setTimeout(() => {
+            searchProducts(searchTerm);
+        }, 300); // 300ms de delay, ajustable
+
+        return () => clearTimeout(delayDebounce); // Limpia el timeout si searchTerm cambia antes del delay
+    }, [searchTerm, searchProducts]);
+
+
     // Memoizar el value para evitar re-renders innecesarios
     const value = useMemo(() => ({
         products,
@@ -297,6 +313,8 @@ export const ProductsProvider = ({ children }) => {
         error,
         lastFetched,
         selectedCategory,
+        searchTerm,
+        setSearchTerm,
         setSelectedCategory,
         addProduct,
         deleteProduct,
@@ -311,6 +329,8 @@ export const ProductsProvider = ({ children }) => {
         error,
         lastFetched,
         selectedCategory,
+        searchTerm,
+        setSearchTerm,
         addProduct,
         deleteProduct,
         updateProduct,
