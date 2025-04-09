@@ -3,6 +3,8 @@ import ErrorPage from './ErrorPage';
 import HomePage from './routes/HomePage';
 import AboutPage from './routes/AboutPage';
 import OrdersPage from './routes/OrdersPage';
+import CartPage from './routes/CartPage';
+import UserProfilePage from './routes/UserProfilePage';
 import Layout from './components/Layout';
 
 export const router = createBrowserRouter([
@@ -22,6 +24,16 @@ export const router = createBrowserRouter([
             {
                 path: 'orders',
                 element: <OrdersPage />,
+            },
+            {
+
+                path: 'carrito',
+                element: <CartPage />,
+            },
+            {
+
+                path: 'perfil',
+                element: <UserProfilePage />,
             }
         ],
     },

@@ -22,7 +22,7 @@ const themes = {
             contrastText: '#000',
         },
         background: {
-            default: '#fff8e1', // Tono crema suave
+            default: '#fffbfb', // Tono crema suave
             paper: '#ffffff',
         },
         logoPath: '/logos/restauranteA-logo.png',

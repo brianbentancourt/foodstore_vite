@@ -4,8 +4,12 @@ import {
     Box,
     Toolbar,
     CssBaseline,
+    Typography,
+    Link,
+
 } from '@mui/material';
 import NavBar from './NavBar';
+import packageInfo from '../../package.json';
 
 function Layout() {
     return (
@@ -37,6 +41,34 @@ function Layout() {
                 >
                     <Toolbar /> {/* Espacio para el AppBar */}
                     <Outlet /> {/* Componentes de rutas hijas */}
+                </Box>
+
+                {/* Footer */}
+                <Box
+                    component="footer"
+                    sx={{
+                        py: 2,
+                        px: 2,
+                        mt: 'auto',
+                        borderTop: (theme) => `1px solid ${theme.palette.divider}`,
+                        textAlign: 'center',
+                    }}
+                >
+                    <Typography variant="body2" color="text.secondary">
+                        v{packageInfo.version}
+                    </Typography>
+                    <Typography variant="body2" color="text.secondary">
+                        Desarrollado por{' '}
+                        <Link
+                            href="http://brianbentancourt.com/"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            color="inherit"
+                            underline="hover"
+                        >
+                            Brian Bentancourt
+                        </Link>
+                    </Typography>
                 </Box>
             </Box>
         </>

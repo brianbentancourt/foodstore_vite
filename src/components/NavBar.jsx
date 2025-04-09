@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import {
     AppBar,
     Toolbar,
@@ -31,12 +31,18 @@ import SearchBar from './SearchBar';
 import LoginModal from './LoginModal';
 import { useAuth } from '../context/AuthContext';
 import { clientAppName } from '../theme/clientTheme';
+import { useOrders } from '../context/OrdersContext';
 
 function NavBar() {
     const [drawerOpen, setDrawerOpen] = useState(false);
     const [loginModalOpen, setLoginModalOpen] = useState(false);
     const [userMenuAnchor, setUserMenuAnchor] = useState(null);
     const { currentUser, userPoints, logout } = useAuth();
+    const { cart } = useOrders();
+
+    const cartItemCount = useMemo(() => {
+        return cart.productsList?.reduce((acc, item) => acc + (item.qty || 0), 0) || 0;
+    }, [cart.productsList]);
 
     const handleDrawerToggle = () => {
         setDrawerOpen(!drawerOpen);
@@ -78,6 +84,9 @@ function NavBar() {
     const drawer = (
         <Box sx={{ width: drawerWidth }} role="presentation" onClick={handleDrawerToggle} onKeyDown={handleDrawerToggle}>
             <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-end', p: 1 }}>
+                <Typography variant="h6" component="div" sx={{ flexGrow: 1, ml: 2 }}>
+                    {clientAppName}
+                </Typography>
                 <IconButton onClick={handleDrawerToggle}>
                     <CloseIcon />
                 </IconButton>
@@ -121,9 +130,12 @@ function NavBar() {
                         >
                             <MenuIcon />
                         </IconButton>
-                        <Typography variant="h6" component="div" noWrap>
+
+                        <Box component="img" src="/logo.png" alt="Logo" sx={{ height: 45, mr: 1 }} />
+
+                        {/* <Typography variant="h6" component="div" noWrap>
                             {clientAppName}
-                        </Typography>
+                        </Typography> */}
                     </Box>
 
                     {/* Sección central: SearchBar siempre centrado */}
@@ -143,8 +155,8 @@ function NavBar() {
 
                     {/* Sección derecha: Login/Usuario, Carrito y puntos */}
                     <Box sx={{ marginLeft: 'auto', display: 'flex', alignItems: 'center', minWidth: '200px', justifyContent: 'flex-end' }}>
-                        <IconButton color="inherit" component={Link} to="/cart">
-                            <Badge badgeContent={1} color="secondary">
+                        <IconButton color="inherit" component={Link} to="/carrito">
+                            <Badge badgeContent={cartItemCount} color="secondary">
                                 <ShoppingCartIcon />
                             </Badge>
                         </IconButton>
@@ -169,7 +181,7 @@ function NavBar() {
                                     open={Boolean(userMenuAnchor)}
                                     onClose={handleUserMenuClose}
                                 >
-                                    <MenuItem component={Link} to="/profile" onClick={handleUserMenuClose}>
+                                    <MenuItem component={Link} to="/perfil" onClick={handleUserMenuClose}>
                                         Perfil
                                     </MenuItem>
                                     <MenuItem onClick={handleLogout}>

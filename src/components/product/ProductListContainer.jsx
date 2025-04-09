@@ -19,9 +19,11 @@ import {
     Fab,
     Snackbar,
     Alert,
-    Paper
+    Paper,
+    Badge,
+    Button
 } from '@mui/material';
-import SearchIcon from '@mui/icons-material/Search';
+// import SearchIcon from '@mui/icons-material/Search';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import FilterListIcon from '@mui/icons-material/FilterList';
 import ProductList from './ProductList';
@@ -140,16 +142,15 @@ const ProductListContainer = () => {
         // setSearchTerm
     } = useProducts();
 
-    const { addOrder } = useOrders();
+    const { addOrder, cart, setCart } = useOrders();
 
 
-    const [cart, setCart] = useState({ productsList: [] });
     const [cartOpen, setCartOpen] = useState(false);
     const [notification, setNotification] = useState({ open: false, message: '', type: 'info' });
 
     // Filtrar productos disponibles
     const availableProducts = useMemo(() => {
-        return filteredProducts.filter(product => product.stock !== false);
+        return filteredProducts.filter(product => product.stock > 0 && product.active);
     }, [filteredProducts]);
 
     // Contar items en el carrito
@@ -196,6 +197,8 @@ const ProductListContainer = () => {
 
             // Filtrar productos con cantidad > 0
             updatedProductsList = updatedProductsList.filter(item => item.qty > 0);
+
+            console.log('Carrito actualizado:', updatedProductsList);
 
             return { ...prevCart, productsList: updatedProductsList };
         });
@@ -391,8 +394,6 @@ const ProductListContainer = () => {
     );
 };
 
-// Imports faltantes
-import { Badge, Button } from '@mui/material';
-import { useSearch } from '../../context/SearchContext';
+
 
 export default ProductListContainer;

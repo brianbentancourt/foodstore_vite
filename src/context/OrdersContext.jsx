@@ -15,6 +15,7 @@ export const useOrders = () => useContext(OrdersContext);
 
 // Crea el Provider del Context
 export const OrdersProvider = ({ children }) => {
+    const [cart, setCart] = useState({ productsList: [], amount: 0 });
     const [orders, setOrders] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
@@ -157,11 +158,13 @@ export const OrdersProvider = ({ children }) => {
         loading,
         error,
         lastFetched,
+        cart,
+        setCart,
         addOrder,
         deleteOrder,
         updateOrder,
         updateOrderState
-    }), [orders, loading, error, lastFetched, addOrder, deleteOrder, updateOrder, updateOrderState]);
+    }), [orders, loading, error, lastFetched, cart, setCart, addOrder, deleteOrder, updateOrder, updateOrderState]);
 
     return (
         <OrdersContext.Provider value={value}>
