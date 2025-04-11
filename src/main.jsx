@@ -11,6 +11,8 @@ import '@fontsource/roboto/400.css';
 import '@fontsource/roboto/500.css';
 import '@fontsource/roboto/700.css';
 
+import 'maplibre-gl/dist/maplibre-gl.css';
+
 import defaultTheme from './theme/clientTheme';
 
 import './dayjs.config';

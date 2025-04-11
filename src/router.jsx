@@ -5,6 +5,7 @@ import AboutPage from './routes/AboutPage';
 import OrdersPage from './routes/OrdersPage';
 import CartPage from './routes/CartPage';
 import UserProfilePage from './routes/UserProfilePage';
+import MapPage from './routes/MapPage';
 import Layout from './components/Layout';
 
 export const router = createBrowserRouter([
@@ -34,6 +35,10 @@ export const router = createBrowserRouter([
 
                 path: 'perfil',
                 element: <UserProfilePage />,
+            },
+            {
+                path: 'mapa',
+                element: <MapPage />,
             }
         ],
     },
