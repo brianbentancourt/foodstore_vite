@@ -1,5 +1,5 @@
 // src/components/LoginModal.jsx
-import React from 'react';
+import React, { useState } from 'react';
 import {
     Dialog,
     DialogTitle,
@@ -7,7 +7,8 @@ import {
     Button,
     IconButton,
     Box,
-    Typography
+    Typography,
+    CircularProgress
 } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 import GoogleIcon from '@mui/icons-material/Google';
@@ -15,15 +16,20 @@ import { useAuth } from '../context/AuthContext';
 
 function LoginModal({ open, onClose }) {
     const { signInWithGoogle } = useAuth();
+    const [error, setError] = useState('');
+    const [loading, setLoading] = useState(false)
 
     const handleGoogleLogin = async () => {
         try {
+            setLoading(true)
             await signInWithGoogle();
             onClose(); // Cerrar el modal después de iniciar sesión
         } catch (error) {
-            console.error("Error en el inicio de sesión:", error);
-            // Aquí podrías mostrar un mensaje de error
+            // console.log(error)
+            // console.error("Error en el inicio de sesión:", error);
+            setError(error.message)
         }
+        setLoading(false)
     };
 
     return (
@@ -54,12 +60,25 @@ function LoginModal({ open, onClose }) {
                     </Typography>
                     <Button
                         variant="contained"
-                        startIcon={<GoogleIcon />}
+                        startIcon={loading ? null : <GoogleIcon />}
                         onClick={handleGoogleLogin}
                         sx={{ width: '80%', py: 1 }}
+                        disabled={loading}
                     >
-                        Continuar con Google
+                        {
+                            loading ? (
+                                <CircularProgress size={24} color="inherit" />
+                            ) :
+                                'Continuar con Google'
+                        }
                     </Button>
+                    {
+                        error && (
+                            <Typography variant="body1" color="error" sx={{ mt: 2 }}>
+                                {error}
+                            </Typography>
+                        )
+                    }
                 </Box>
             </DialogContent>
         </Dialog>

@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import maplibregl from 'maplibre-gl';
 import { Box } from '@mui/material';
 
-function MapWithMUI({ initialLng = -74.5, initialLat = 40, initialZoom = 9 }) {
+function MapWithMUI({ initialLng = -57.9973333, initialLat = -32.316075, initialZoom = 9 }) {
     const mapContainer = useRef(null);
     const map = useRef(null);
     const [mapLoaded, setMapLoaded] = useState(false);
@@ -14,7 +14,7 @@ function MapWithMUI({ initialLng = -74.5, initialLat = 40, initialZoom = 9 }) {
             try {
                 map.current = new maplibregl.Map({
                     container: mapContainer.current,
-                    style: 'https://demotiles.maplibre.org/style.json',
+                    style: `https://api.maptiler.com/maps/streets-v2/style.json?key=${import.meta.env.REACT_APP_MAPTILER_KEY}`,
                     center: [initialLng, initialLat],
                     zoom: initialZoom
                 });
